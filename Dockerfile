@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.7.13
 
 ENV PYTHONUNBUFFERED 1
 
@@ -16,11 +16,9 @@ ADD original /app/original
 
 ADD modified /app/modified
 
-# RUN cd original
+WORKDIR /app/original
 
-# RUN python setup.py install
-
-# CMD [ "echo", "TESTE" ]
+RUN python setup.py install
 
 # docker build . -t incomplete-kernel-treatment
-# docker run incomplete-kernel-treatment
+# docker run -it -v $(pwd):/app incomplete-kernel-treatment /bin/bash
