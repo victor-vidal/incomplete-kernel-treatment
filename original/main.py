@@ -8,7 +8,7 @@ from pairwisemkl.learner.optimize_kernel_weights import *
 from pairwisemkl.learner.cg_kron_rls import CGKronRLS
 
 
-data_path = './drug_response_data'
+data_path = '../complete_drug_response_data'
 
 
 # Drug kernels
