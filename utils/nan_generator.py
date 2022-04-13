@@ -18,7 +18,7 @@ def nan_generator(kernel_matrix: np.ndarray, kernel_name: str, percentage: int) 
         r = random.randrange(dim)
         c = random.randrange(dim)
 
-        if not np.isnan(kernel_matrix[r][c]):
+        if (not np.isnan(kernel_matrix[r][c])) and (r != c):
             kernel_matrix[r][c] = np.nan
             aux += 1
 
