@@ -14,7 +14,7 @@ imputed_data_path = '../imputed_kernels'
 imputed_data_results_path = '../imputed_kernels_results'
 
 
-for technique in ['zero', 'mean', 'median'][:1]:
+for technique in ['zero', 'mean', 'median'][1:2]:
     for percentage in [10, 30, 50, 70]:
 
         # Drug kernels

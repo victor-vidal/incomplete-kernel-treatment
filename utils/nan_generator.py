@@ -14,13 +14,14 @@ def nan_generator(kernel_matrix: np.ndarray, kernel_name: str, percentage: int) 
     num_nans = round(num_total_cells * (percentage / 100))
 
     aux = 0
-    while aux != num_nans:
+    while aux < num_nans:
         r = random.randrange(dim)
         c = random.randrange(dim)
 
         if (not np.isnan(kernel_matrix[r][c])) and (r != c):
             kernel_matrix[r][c] = np.nan
-            aux += 1
+            kernel_matrix[c][r] = np.nan
+            aux += 2
 
     if not os.path.exists(output_data_path + f'/{percentage}'):
         os.mkdir(output_data_path + f'/{percentage}')
@@ -38,7 +39,8 @@ kd_file_names = [x.split('\n')[0] for x in kd_file_names]
 kd_list = []
 for kd in kd_file_names:
     with open(input_data_path + '/Drug_kernels/' + kd, 'r') as f:
-        kd_list.append(np.loadtxt(f))
+        dimension = len(f.readlines())
+        kd_list.append(np.loadtxt(input_data_path + '/Drug_kernels/' + kd, skiprows=0, usecols=range(0, dimension)))
 
 
 # Cell line kernels
@@ -50,7 +52,8 @@ kc_list = []
 # Prepare a list of cell line kernels
 for kc in kc_file_names:
     with open(input_data_path + '/Cell_line_kernels/' + kc, 'r') as f:
-        kc_list.append(np.loadtxt(f))
+        dimension = len(f.readlines())
+        kc_list.append(np.loadtxt(input_data_path + '/Cell_line_kernels/' + kc, skiprows=0, usecols=range(0, dimension)))
 
 
 # Generate incomplete kernel matrices
