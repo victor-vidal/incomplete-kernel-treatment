@@ -1,4 +1,4 @@
-import copy, numpy as np
+import os, copy, numpy as np
 
 from math import sqrt
 from sklearn import preprocessing, metrics
@@ -14,9 +14,15 @@ imputed_data_path = '../imputed_kernels'
 imputed_data_results_path = '../imputed_kernels_results'
 
 
-for technique in ['zero', 'mean', 'median'][1:2]:
+for technique in ['zero', 'mean', 'median'][:1]:
     for percentage in [10, 30, 50, 70]:
 
+        # Create directories
+        if not os.path.exists(imputed_data_results_path + f'/{technique}'):
+            os.mkdir(imputed_data_results_path + f'/{technique}')
+        if not os.path.exists(imputed_data_results_path + f'/{technique}/{percentage}'):
+            os.mkdir(imputed_data_results_path + f'/{technique}/{percentage}')
+        
         # Drug kernels
         # Read file names of drug kernels
         with open(complete_data_path + '/Drug_kernels/Drug_kernel_file_names.txt', 'r') as f:
