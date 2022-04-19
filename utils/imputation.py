@@ -21,6 +21,7 @@ def imputate_matrix(kernel_matrix: np.ndarray, kernel_name: str, percentage: int
         for c in range(dim):
             if np.isnan(matrix[r][c]):
                 matrix[r][c] = inputed_value
+                matrix[c][r] = inputed_value
         
     if not os.path.exists(output_data_path + f'/{technique}'):
         os.mkdir(output_data_path + f'/{technique}')

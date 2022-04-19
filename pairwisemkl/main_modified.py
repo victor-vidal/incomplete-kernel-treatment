@@ -15,7 +15,7 @@ imputed_data_results_path = '../imputed_kernels_results'
 
 
 for technique in ['zero', 'mean', 'median'][:1]:
-    for percentage in [10, 30, 50, 70]:
+    for percentage in [10, 30, 50, 70][1:]:
 
         # Create directories
         if not os.path.exists(imputed_data_results_path + f'/{technique}'):
@@ -151,7 +151,7 @@ for technique in ['zero', 'mean', 'median'][:1]:
             # Read pre-defined inner folds used in the experiments presented in pairwiseMKL paper
             inner_folds = np.loadtxt(complete_data_path + '/Folds/inner_folds_outer%d.txt'%i_out).astype(int)
                 
-            for i_in in range(3):
+            for i_in in range(1):
                 print('    Inner loop ' + str(i_in+1))
                 
                 inner_test_ids  = np.array(np.where(inner_folds==i_in)).squeeze()
