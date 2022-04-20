@@ -14,8 +14,8 @@ imputed_data_path = '../imputed_kernels'
 imputed_data_results_path = '../imputed_kernels_results'
 
 
-for technique in ['zero', 'mean', 'median'][:1]:
-    for percentage in [10, 30, 50, 70][1:]:
+for technique in ['zero', 'mean', 'median'][1:2]:
+    for percentage in [10, 30, 50, 70][3:]:
 
         # Create directories
         if not os.path.exists(imputed_data_results_path + f'/{technique}'):
