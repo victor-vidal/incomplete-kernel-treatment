@@ -1,4 +1,5 @@
 import os, numpy as np
+from fancyimpute import IterativeSVD
 
 
 input_data_path = '../incomplete_kernels'
@@ -10,10 +11,24 @@ def imputate_matrix(kernel_matrix: np.ndarray, kernel_name: str, percentage: int
     
     matrix = kernel_matrix.copy()
     
+    if not os.path.exists(output_data_path + f'/{technique}'):
+        os.mkdir(output_data_path + f'/{technique}')
+    if not os.path.exists(output_data_path + f'/{technique}/{percentage}'):
+        os.mkdir(output_data_path + f'/{technique}/{percentage}')
+    
     if technique == 'zero':
         inputed_value = 0
     elif technique == 'mean':
         inputed_value = np.nanmean(matrix)
+    elif technique == 'isvd':
+        matrix = IterativeSVD().fit_transform(kernel_matrix)
+        
+        np.savetxt(
+            output_data_path + f'/{technique}/{percentage}/{kernel_name}', 
+            matrix, 
+            delimiter='\t'
+        )
+        return
     else:
         inputed_value = np.nanmedian(matrix)
     
@@ -22,11 +37,6 @@ def imputate_matrix(kernel_matrix: np.ndarray, kernel_name: str, percentage: int
             if np.isnan(matrix[r][c]):
                 matrix[r][c] = inputed_value
                 matrix[c][r] = inputed_value
-        
-    if not os.path.exists(output_data_path + f'/{technique}'):
-        os.mkdir(output_data_path + f'/{technique}')
-    if not os.path.exists(output_data_path + f'/{technique}/{percentage}'):
-        os.mkdir(output_data_path + f'/{technique}/{percentage}')
         
     np.savetxt(
         output_data_path + f'/{technique}/{percentage}/{kernel_name}', 
@@ -58,5 +68,5 @@ for percentage in [10, 30, 50, 70]:
     for kernel_file_name in kernel_file_names:
         with open(input_data_path + f'/{percentage}/{kernel_file_name}', 'r') as f:
             kernel_matrix = np.loadtxt(f)
-        for technique in ['zero', 'mean', 'median']:
+        for technique in ['zero', 'mean', 'median', 'isvd'][3:]:
             imputate_matrix(kernel_matrix, kernel_file_name, percentage, technique)
