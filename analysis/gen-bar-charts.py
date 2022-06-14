@@ -9,18 +9,23 @@ for percentage in [10, 30, 50, 70]:
     data = {'original': original_f1_mean}
     
     for technique in ['zero', 'mean', 'median', 'isvd', 'knn']:
-        data[technique] = np.loadtxt(results_path + f'/{technique}/{percentage}/RMSE.txt').mean()
+        data[technique] = {
+            "mean": np.loadtxt(results_path + f'/{technique}/{percentage}/RMSE.txt').mean(),
+            "std": "{:e}".format(np.loadtxt(results_path + f'/{technique}/{percentage}/RMSE.txt').std())
+        }
     
-    # Assembly plot
-    labels = data.keys()
-    values = data.values()
+    # # Assembly plot
+    # labels = data.keys()
+    # values = data.values()
     
-    fig, ax = plt.subplots()
-    bars = ax.bar(labels, values)
-    ax.bar_label(bars)
+    # fig, ax = plt.subplots()
+    # bars = ax.bar(labels, values)
+    # ax.bar_label(bars)
     
-    plt.xlabel('Techniques')
-    plt.ylabel('RSME')
-    plt.title(f'RSME per Tecnique with {percentage}% NANs')
+    # plt.xlabel('Techniques')
+    # plt.ylabel('RSME')
+    # plt.title(f'RSME per Tecnique with {percentage}% NANs')
     
-    plt.savefig(f'./plots/rsme/rsme_{percentage}.png')
+    # plt.savefig(f'./plots/rsme/rsme_{percentage}.png')
+    print(percentage)
+    print(data)
