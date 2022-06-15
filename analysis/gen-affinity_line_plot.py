@@ -1,4 +1,3 @@
-from matplotlib.pyplot import xlabel
 import numpy as np
 import seaborn as sns
 
@@ -15,4 +14,5 @@ distplot = sns.distplot(
 )
 distplot.set(xlabel='Affinity', ylabel='Density')
 fig = distplot.get_figure()
+fig.subplots_adjust(left = 0.3)
 fig.savefig('line_plots/affinity_density_histogram.png') 
