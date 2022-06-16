@@ -81,24 +81,20 @@ def handle_technique_title(technique):
     return technique.capitalize()
 
 
-for technique in techniques + ['baseline']:
-    percentage = 0 if technique == 'baseline' else 10
+for percentage in percentages[:-1]:
     heatmap = plot_heatmap(
         df, 
-        percentage=percentage,
-        technique=technique
+        percentage=int(percentage),
+        technique='isvd'
     )
 
     heatmap.set_ylabel('')    
     heatmap.set_xlabel('')
-    
-    if technique == 'baseline':
-        heatmap.set_title(f'Baseline')
-    else:
-        heatmap.set_title(f'Technique: {handle_technique_title(technique)}; Percentage: 10%')
+
+    heatmap.set_title(f'Technique: iSVD; Percentage: {percentage}%')
 
     fig = heatmap.get_figure()
     fig.tight_layout()
-    fig.savefig(f'heatmaps/{technique}_10_heatmap.png', format='png')
+    fig.savefig(f'heatmaps/isvd_{percentage}_heatmap.png', format='png')
     
     plt.clf()
