@@ -1,0 +1,56 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Technique & Percentage & F1-score & Pearson & RMSE \\ \hline
+
+Baseline & - & \multicolumn{1}{c|}{0.6303} & \multicolumn{1}{c|}{0.8576} & \multicolumn{1}{c|}{1.6816} \\ \hline 
+
+
+Zero & \multirow{5}{*}{10\%} & \multicolumn{1}{c|}{0.5537 ($\pm$ 1.92E - 02)} & \multicolumn{1}{c|}{0.7267 ($\pm$ 1.16E - 02)} & \multicolumn{1}{c|}{2.4586 ($\pm$ 5.47E - 02)} \\ \cline{1-1} \cline{3-5}
+
+Mean & & \multicolumn{1}{c|}{0.5894 ($\pm$ 1.51E - 02)} & \multicolumn{1}{c|}{0.7736 ($\pm$ 1.17E - 02)} & \multicolumn{1}{c|}{2.1699 ($\pm$ 4.23E - 02)} \\ \cline{1-1} \cline{3-5} 
+
+Median & & \multicolumn{1}{c|}{0.5930 ($\pm$ 1.23E - 02)} & \multicolumn{1}{c|}{0.7790 ($\pm$ 1.20E - 02)} & \multicolumn{1}{c|}{2.1413 ($\pm$ 4.16E - 02)} \\ \cline{1-1} \cline{3-5}
+
+iSVD & & \multicolumn{1}{c|}{0.6174 ($\pm$ 1.92E - 02)} & \multicolumn{1}{c|}{0.7879 ($\pm$ 1.68E - 02)} & \multicolumn{1}{c|}{2.0988 ($\pm$ 7.75E - 02)} \\ \cline{1-1} \cline{3-5} 
+
+KNN & & \multicolumn{1}{c|}{\textbf{0.6259} ($\pm$ 9.99E - 03)} & \multicolumn{1}{c|}{\textbf{0.8479} ($\pm$ 1.13E - 02)} & \multicolumn{1}{c|}{\textbf{1.7326} ($\pm$ 3.75E - 02)} \\ \hline
+
+
+Zero & \multirow{5}{*}{30\%} & 0.5334 ($\pm$ 2.44E - 02) & 0.6470 ($\pm$ 1.72E - 02) & 2.9584 ($\pm$ 4.30E - 02) \\ \cline{1-1} \cline{3-5} 
+
+Mean & & 0.5962 ($\pm$ 1.29E - 02) & 0.7731 ($\pm$ 1.30E - 02) & 2.1798 ($\pm$ 4.44E - 02) \\ \cline{1-1} \cline{3-5} 
+
+Median & & 0.5985 ($\pm$ 1.48E - 02) & 0.7742 ($\pm$ 1.35E - 02) & 2.1747 ($\pm$ 4.38E - 02) \\ \cline{1-1} \cline{3-5} 
+
+iSVD & & \textbf{0.6138} ($\pm$ 2.78E - 02) & \textbf{0.8195} ($\pm$ 1.44E - 02) & \textbf{1.9092} ($\pm$ 5.56E - 02) \\ \cline{1-1} \cline{3-5} 
+
+KNN & & 0.6084 ($\pm$ 1.94E - 02) & 0.8129 ($\pm$ 1.04E - 02) & 1.9292 ($\pm$ 3.03E - 02) \\ \hline
+
+
+Zero & \multirow{5}{*}{50\%} & 0.5074 ($\pm$ 2.26E - 02) & 0.5751 ($\pm$ 2.49E - 02) & 3.5290 ($\pm$ 8.02E - 02) \\ \cline{1-1} \cline{3-5} 
+
+Mean & & 0.5828 ($\pm$ 1.53E - 02) & 0.7496 ($\pm$ 1.43E - 02) & 2.3124 ($\pm$ 4.20E - 02) \\ \cline{1-1} \cline{3-5}
+
+Median & & 0.5780 ($\pm$ 1.54E - 02) & 0.7496 ($\pm$ 1.40E - 02) & 2.3126 ($\pm$ 4.81E - 02) \\ \cline{1-1} \cline{3-5} 
+
+iSVD & & \textbf{0.5979} ($\pm$ 1.04E - 02) & \textbf{0.7817} ($\pm$ 1.25E - 02) & \textbf{2.1192} ($\pm$ 2.56E - 02) \\ \cline{1-1} \cline{3-5} 
+
+KNN & & 0.5551 ($\pm$ 2.15E - 02) & 0.6589 ($\pm$ 2.07E - 02) & 2.8566 ($\pm$ 7.02E - 02) \\ \hline
+
+
+Zero & \multirow{5}{*}{70\%} & 0.4902 ($\pm$ 1.34E - 02) & 0.5178 ($\pm$ 1.67E - 02) & 4.0853 ($\pm$ 5.82E - 02) \\ \cline{1-1} \cline{3-5} 
+
+Mean & & 0.5867 ($\pm$ 1.01E - 02) & 0.7598 ($\pm$ 1.37E - 02) & 2.2514 ($\pm$ 3.76E - 02) \\ \cline{1-1} \cline{3-5} 
+
+Median & & \textbf{0.5930} ($\pm$ 9.62E - 03) & \textbf{0.7694} ($\pm$ 1.30E - 02) & \textbf{2.1961} ($\pm$ 4.16E - 02) \\ \cline{1-1} \cline{3-5} 
+
+iSVD & & 0.5775 ($\pm$ 1.47E - 02) & 0.7599 ($\pm$ 1.09E - 02) & 2.2438 ($\pm$ 2.57E - 02) \\ \cline{1-1} \cline{3-5} 
+
+KNN & & 0.5657 ($\pm$ 1.60E - 02) & 0.7215 ($\pm$ 3.71E - 02) & 2.4779 ($\pm$ 2.12E - 01) \\ \hline 
+
+\end{tabular}
+\caption{Comparative analysis of metrics for each technical-percentage combination}
+\end{table}
