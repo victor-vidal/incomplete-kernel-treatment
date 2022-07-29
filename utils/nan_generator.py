@@ -1,13 +1,16 @@
-import os
-import random
-import numpy as np
+import os, random, numpy as np
 
 
 input_data_path = '../complete_drug_response_data'
 output_data_path = '../incomplete_kernels'
 
 
-def nan_generator(kernel_matrix: np.ndarray, kernel_name: str, percentage: int) -> None:
+def nan_generator(
+    kernel_matrix: np.ndarray, 
+    kernel_name: str, 
+    iteration: int, 
+    percentage: int
+) -> None:
     dim = len(kernel_matrix)
     num_total_cells = dim ** 2
 
@@ -23,10 +26,12 @@ def nan_generator(kernel_matrix: np.ndarray, kernel_name: str, percentage: int) 
             kernel_matrix[c][r] = np.nan
             aux += 2
 
-    if not os.path.exists(output_data_path + f'/{percentage}'):
-        os.mkdir(output_data_path + f'/{percentage}')
+    if not os.path.exists(output_data_path + f'/{iteration}'):
+        os.mkdir(output_data_path + f'/{iteration}')
+    if not os.path.exists(output_data_path + f'/{iteration}/{percentage}'):
+        os.mkdir(output_data_path + f'/{iteration}/{percentage}')
 
-    np.savetxt(output_data_path +
+    np.savetxt(output_data_path + f'/{iteration}' +
                f'/{percentage}/' + kernel_name, kernel_matrix, delimiter='\t')
 
 
@@ -57,9 +62,20 @@ for kc in kc_file_names:
 
 
 # Generate incomplete kernel matrices
-for percentage in [10, 30, 50, 70]:
-    for i in range(len(kd_file_names)):
-        nan_generator(kd_list[i].copy(), kd_file_names[i], percentage)
+for iteration in range(5):
+    for percentage in [10, 30, 50, 70]:
+        for i in range(len(kd_file_names)):
+            nan_generator(
+                kd_list[i].copy(), 
+                kd_file_names[i], 
+                iteration, 
+                percentage
+            )
 
-    for i in range(len(kc_file_names)):
-        nan_generator(kc_list[i].copy(), kc_file_names[i], percentage)
+        for i in range(len(kc_file_names)):
+            nan_generator(
+                kc_list[i].copy(), 
+                kc_file_names[i], 
+                iteration, 
+                percentage
+            )

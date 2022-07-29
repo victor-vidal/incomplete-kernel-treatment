@@ -14,8 +14,6 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 ADD pairwisemkl /app/pairwisemkl
 
-# ADD modified /app/modified
-
 WORKDIR /app/pairwisemkl
 
 RUN python setup.py install

@@ -3,3 +3,4 @@ cvxopt
 sklearn
 matplotlib
 seaborn
+fancyimpute

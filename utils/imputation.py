@@ -6,15 +6,19 @@ input_data_path = '../incomplete_kernels'
 output_data_path = '../imputed_kernels'
 
 
-def imputate_matrix(kernel_matrix: np.ndarray, kernel_name: str, percentage: int, technique: str) -> None:
+def imputate_matrix(
+    kernel_matrix: np.ndarray, 
+    kernel_name: str, 
+    iteration: int, 
+    percentage: int, 
+    technique: str
+) -> None:
     dim = len(kernel_matrix)
     
     matrix = kernel_matrix.copy()
     
-    if not os.path.exists(output_data_path + f'/{technique}'):
-        os.mkdir(output_data_path + f'/{technique}')
-    if not os.path.exists(output_data_path + f'/{technique}/{percentage}'):
-        os.mkdir(output_data_path + f'/{technique}/{percentage}')
+    if not os.path.exists(output_data_path + f'/{iteration}/{technique}/{percentage}'):
+        os.makedirs(output_data_path + f'/{iteration}/{technique}/{percentage}')
     
     if technique == 'zero':
         inputed_value = 0
@@ -24,7 +28,7 @@ def imputate_matrix(kernel_matrix: np.ndarray, kernel_name: str, percentage: int
         matrix = IterativeSVD().fit_transform(kernel_matrix)
         
         np.savetxt(
-            output_data_path + f'/{technique}/{percentage}/{kernel_name}', 
+            output_data_path + f'/{iteration}/{technique}/{percentage}/{kernel_name}', 
             matrix, 
             delimiter='\t'
         )
@@ -33,7 +37,7 @@ def imputate_matrix(kernel_matrix: np.ndarray, kernel_name: str, percentage: int
         matrix = KNN(k=3).fit_transform(kernel_matrix)
         
         np.savetxt(
-            output_data_path + f'/{technique}/{percentage}/{kernel_name}', 
+            output_data_path + f'/{iteration}/{technique}/{percentage}/{kernel_name}', 
             matrix, 
             delimiter='\t'
         )
@@ -48,7 +52,7 @@ def imputate_matrix(kernel_matrix: np.ndarray, kernel_name: str, percentage: int
                 matrix[c][r] = inputed_value
         
     np.savetxt(
-        output_data_path + f'/{technique}/{percentage}/{kernel_name}', 
+        output_data_path + f'/{iteration}/{technique}/{percentage}/{kernel_name}', 
         matrix, 
         delimiter='\t'
     )
@@ -73,9 +77,16 @@ kernel_file_names = kd_file_names + kc_file_names
 
 
 # Imputating missing data
-for percentage in [10, 30, 50, 70]:
-    for kernel_file_name in kernel_file_names:
-        with open(input_data_path + f'/{percentage}/{kernel_file_name}', 'r') as f:
-            kernel_matrix = np.loadtxt(f)
-        for technique in ['zero', 'mean', 'median', 'isvd', 'knn']:
-            imputate_matrix(kernel_matrix, kernel_file_name, percentage, technique)
+for iteration in range(5):
+    for percentage in [10, 30, 50, 70]:
+        for kernel_file_name in kernel_file_names:
+            with open(input_data_path + f'/{iteration}/{percentage}/{kernel_file_name}', 'r') as f:
+                kernel_matrix = np.loadtxt(f)
+            for technique in ['zero', 'mean', 'median', 'isvd', 'knn']:
+                imputate_matrix(
+                    kernel_matrix, 
+                    kernel_file_name, 
+                    iteration,
+                    percentage, 
+                    technique
+                )
