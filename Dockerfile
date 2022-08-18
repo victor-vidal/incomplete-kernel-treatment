@@ -18,5 +18,8 @@ WORKDIR /app/pairwisemkl
 
 RUN python setup.py install
 
+CMD [ "python", "main_modified.py" ]
+
 # docker build . -t incomplete-kernel-treatment
 # docker run -it -v $(pwd):/app incomplete-kernel-treatment /bin/bash
+# docker run -v $(pwd):/app incomplete-kernel-treatment
