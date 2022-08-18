@@ -13,7 +13,7 @@ complete_data_path = '../complete_drug_response_data'
 expirement_data_path = '../expirement_data'
 
 for iteration in range(5):
-    for technique in ['zero', 'mean', 'median', 'isvd', 'knn'][3:]:
+    for technique in ['zero', 'mean', 'median', 'isvd', 'knn']:
         for percentage in [10, 30, 50, 70]:
 
             # Create directories
@@ -101,7 +101,7 @@ for iteration in range(5):
 
             # Outer CV loop
             for i_out in range(10):
-                print(f'Outer loop {i_out + 1}, Technique: {technique}, Percentage: {percentage}\n')
+                print(f'Iteration: {iteration}, Outer loop: {i_out + 1}, Technique: {technique}, Percentage: {percentage}\n')
 
                 test_ids  = np.array(np.where(outer_folds==i_out)).squeeze()
                 train_ids = np.array(np.where(outer_folds!=i_out)).squeeze()
