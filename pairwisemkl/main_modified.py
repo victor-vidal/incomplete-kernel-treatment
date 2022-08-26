@@ -142,44 +142,44 @@ for iteration in range(5):
                     kd_list_selected.append(kd_list[kd_ids[ix[i_p]]])
                     kc_list_selected.append(kc_list[kc_ids[ix[i_p]]])
                     
-                # Inner CV loop
-                rmse_inner = np.empty([3, len(regparam)]); rmse_inner[:] = np.NAN
+                # # Inner CV loop
+                # rmse_inner = np.empty([3, len(regparam)]); rmse_inner[:] = np.NAN
                 
-                # Read pre-defined inner folds used in the experiments presented in pairwiseMKL paper
-                inner_folds = np.loadtxt(f'{expirement_data_path}/cross_validation/{iteration}/inner_folds_outer{i_out}.txt').astype(int)
+                # # Read pre-defined inner folds used in the experiments presented in pairwiseMKL paper
+                # inner_folds = np.loadtxt(f'{expirement_data_path}/cross_validation/{iteration}/inner_folds_outer{i_out}.txt').astype(int)
                     
-                for i_in in range(3):
-                    print('    Inner loop ' + str(i_in+1))
+                # for i_in in range(3):
+                #     print('    Inner loop ' + str(i_in+1))
                     
-                    inner_test_ids  = np.array(np.where(inner_folds==i_in)).squeeze()
-                    inner_train_ids = np.array(np.where((inner_folds!=i_in) & (inner_folds!=-1))).squeeze()
+                #     inner_test_ids  = np.array(np.where(inner_folds==i_in)).squeeze()
+                #     inner_train_ids = np.array(np.where((inner_folds!=i_in) & (inner_folds!=-1))).squeeze()
                 
-                    y_test_inner        = y_vec_known[inner_test_ids]
-                    drug_ids_test_inner = drug_ids_known[inner_test_ids]
-                    cell_ids_test_inner = cell_ids_known[inner_test_ids]
+                #     y_test_inner        = y_vec_known[inner_test_ids]
+                #     drug_ids_test_inner = drug_ids_known[inner_test_ids]
+                #     cell_ids_test_inner = cell_ids_known[inner_test_ids]
                     
-                    y_train_inner        = y_vec_known[inner_train_ids]
-                    drug_ids_train_inner = drug_ids_known[inner_train_ids]
-                    cell_ids_train_inner = cell_ids_known[inner_train_ids]
+                #     y_train_inner        = y_vec_known[inner_train_ids]
+                #     drug_ids_train_inner = drug_ids_known[inner_train_ids]
+                #     cell_ids_train_inner = cell_ids_known[inner_train_ids]
                 
-                    # Find optimal \lambda
-                    for i_param in range(len(regparam)):
-                        # Training           
-                        learner = CGKronRLS(K1 = kd_list_selected, 
-                                            K2 = kc_list_selected, 
-                                            weights = w.tolist(),
-                                            Y = y_train_inner, 
-                                            label_row_inds = [drug_ids_train_inner for i in range(len(w))], 
-                                            label_col_inds = [cell_ids_train_inner for i in range(len(w))], 
-                                            regparam = regparam[i_param], 
-                                            maxiter = 400)
-                        # Prediction 
-                        pred_inner = learner.predict(kd_list_selected, kc_list_selected, [drug_ids_test_inner for i in range(len(w))], [cell_ids_test_inner for i in range(len(w))])
-                        # RMSE
-                        rmse_inner[i_in,i_param] = sqrt(((y_test_inner - pred_inner) ** 2).mean(axis=0))
+                #     # Find optimal \lambda
+                #     for i_param in range(len(regparam)):
+                #         # Training           
+                #         learner = CGKronRLS(K1 = kd_list_selected, 
+                #                             K2 = kc_list_selected, 
+                #                             weights = w.tolist(),
+                #                             Y = y_train_inner, 
+                #                             label_row_inds = [drug_ids_train_inner for i in range(len(w))], 
+                #                             label_col_inds = [cell_ids_train_inner for i in range(len(w))], 
+                #                             regparam = regparam[i_param], 
+                #                             maxiter = 400)
+                #         # Prediction 
+                #         pred_inner = learner.predict(kd_list_selected, kc_list_selected, [drug_ids_test_inner for i in range(len(w))], [cell_ids_test_inner for i in range(len(w))])
+                #         # RMSE
+                #         rmse_inner[i_in,i_param] = sqrt(((y_test_inner - pred_inner) ** 2).mean(axis=0))
                 
-                # \lambda with the lowest RMSE 
-                model[i_out,0] = regparam[np.argmin(np.mean(rmse_inner, axis=0))]
+                # # \lambda with the lowest RMSE 
+                # model[i_out,0] = regparam[np.argmin(np.mean(rmse_inner, axis=0))]
                         
                 
                 # Model training with selected \lambda       
@@ -189,7 +189,7 @@ for iteration in range(5):
                                     Y = y_train, 
                                     label_row_inds = [drug_ids_train for i in range(len(w))], 
                                     label_col_inds = [cell_ids_train for i in range(len(w))], 
-                                    regparam = model[i_out,0], 
+                                    regparam = 1, 
                                     maxiter = 400)
                 # Prediction
                 y_pred_outer_vec[test_ids] = learner.predict(kd_list_selected, kc_list_selected, [drug_ids_test for i in range(len(w))], [cell_ids_test for i in range(len(w))])

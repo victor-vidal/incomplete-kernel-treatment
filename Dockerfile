@@ -22,4 +22,6 @@ CMD [ "python", "main_modified.py" ]
 
 # docker build . -t incomplete-kernel-treatment
 # docker run -it -v $(pwd):/app incomplete-kernel-treatment /bin/bash
-# docker run -v $(pwd):/app incomplete-kernel-treatment
+# docker run -v $(pwd):/app -d incomplete-kernel-treatment
+
+# IP: 192.168.0.151 Senha: workshop
