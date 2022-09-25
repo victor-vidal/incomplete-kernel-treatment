@@ -1,30 +1,49 @@
-import numpy as np, matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-metric = "Pearson_correlation"
+from get_results_dataframe import get_results_dataframe
 
-results_path = "../imputed_kernels_results"
 
-x = [10, 30, 50, 70]
+df = get_results_dataframe()
 
-zero_y = [np.loadtxt(results_path + f'/zero/{percentage}/{metric}.txt').mean() for percentage in x]
 
-mean_y = [np.loadtxt(results_path + f'/mean/{percentage}/{metric}.txt').mean() for percentage in x]
+# F1
+f1_lineplot = sns.lineplot(x='tipo', y='F1', data=df, hue='percentual', style="percentual", palette='bright')
 
-median_y = [np.loadtxt(results_path + f'/median/{percentage}/{metric}.txt').mean() for percentage in x]
+f1_lineplot.set_ylabel('F1-score')
+f1_lineplot.set_xlabel('Technique')
+f1_lineplot.set_title('Techniques performance evaluation in comparison with F1 score')
+f1_lineplot.legend(loc='lower right')
 
-isvd_y = [np.loadtxt(results_path + f'/isvd/{percentage}/{metric}.txt').mean() for percentage in x]
+f1_lineplot_fig = f1_lineplot.get_figure()
 
-knn_y = [np.loadtxt(results_path + f'/knn/{percentage}/{metric}.txt').mean() for percentage in x]
+f1_lineplot_fig.savefig(f'line_plots/mean_f1_score.png')
+plt.clf()
 
-# plot lines
-plt.plot(x, zero_y, label = "Zero")
-plt.plot(x, mean_y, label = "Mean")
-plt.plot(x, median_y, label = "Median")
-plt.plot(x, isvd_y, label = "iSVD")
-plt.plot(x, knn_y, label = "KNN")
-plt.legend()
 
-plt.xlabel("Missing data percentage")
-plt.ylabel(metric)
+# Pearson
+pearson_lineplot = sns.lineplot(x='tipo', y='Pearson_Correlation', data=df, hue='percentual', style="percentual", palette='bright')
 
-plt.savefig(f'./line_plots/{metric}.png')
+pearson_lineplot.set_ylabel('Pearson Correlation')
+pearson_lineplot.set_xlabel('Technique')
+pearson_lineplot.set_title('Techniques performance evaluation in comparison with Pearson Correlation')
+pearson_lineplot.legend(loc='lower right')
+
+pearson_lineplot_fig = pearson_lineplot.get_figure()
+
+pearson_lineplot_fig.savefig(f'line_plots/mean_pearson.png')
+plt.clf()
+
+
+# RMSE
+rmse_barplot = sns.lineplot(x='tipo', y='RMSE', data=df, hue='percentual', style="percentual", palette='bright')
+
+rmse_barplot.set_ylabel('RMSE')
+rmse_barplot.set_xlabel('Technique')
+rmse_barplot.set_title('Techniques performance evaluation in comparison with RMSE')
+rmse_barplot.legend(loc='lower right')
+
+rmse_barplot_fig = rmse_barplot.get_figure()
+
+rmse_barplot_fig.savefig(f'line_plots/mean_rmse.png')
+plt.clf()

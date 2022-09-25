@@ -1,31 +1,61 @@
-import numpy as np, matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+from get_results_dataframe import get_results_dataframe
 
 
-original_f1_mean = np.loadtxt('../complete_drug_response_data/Pearson_correlation.txt').mean()
-results_path = '../imputed_kernels_results'
+df = get_results_dataframe()
 
 
-for percentage in [10, 30, 50, 70]:
-    data = {'original': original_f1_mean}
-    
-    for technique in ['zero', 'mean', 'median', 'isvd', 'knn']:
-        data[technique] = {
-            "mean": np.loadtxt(results_path + f'/{technique}/{percentage}/Pearson_correlation.txt').mean(),
-            "std": "{:e}".format(np.loadtxt(results_path + f'/{technique}/{percentage}/Pearson_correlation.txt').std())
-        }
-    
-    # # Assembly plot
-    # labels = data.keys()
-    # values = data.values()
-    
-    # fig, ax = plt.subplots()
-    # bars = ax.bar(labels, values)
-    # ax.bar_label(bars)
-    
-    # plt.xlabel('Techniques')
-    # plt.ylabel('RSME')
-    # plt.title(f'RSME per Tecnique with {percentage}% NANs')
-    
-    # plt.savefig(f'./plots/rsme/rsme_{percentage}.png')
-    print(percentage)
-    print(data)
+# F1
+f1_barplot = sns.barplot(x='tipo', y='F1', data=df, hue='percentual')
+
+f1_barplot.set(ylim=(0, 1))
+f1_barplot.set_ylabel('F1-score')
+f1_barplot.set_xlabel('Technique')
+f1_barplot.set_title('Techniques performance evaluation in comparison with F1 score')
+f1_barplot.legend(loc='lower right')
+
+for container in f1_barplot.containers:
+    f1_barplot.bar_label(container, size=8, rotation='vertical', padding=2)
+
+f1_barplot_fig = f1_barplot.get_figure()
+
+f1_barplot_fig.savefig(f'bar_plots/mean_f1_score.png')
+plt.clf()
+
+
+# Pearson
+pearson_barplot = sns.barplot(x='tipo', y='Pearson_Correlation', data=df, hue='percentual')
+
+pearson_barplot.set(ylim=(0, 1.1))
+pearson_barplot.set_ylabel('Pearson Correlation')
+pearson_barplot.set_xlabel('Technique')
+pearson_barplot.set_title('Techniques performance evaluation in comparison with Pearson Correlation')
+pearson_barplot.legend(loc='lower right')
+
+for container in pearson_barplot.containers:
+    pearson_barplot.bar_label(container, size=8, rotation='vertical', padding=2)
+
+pearson_barplot_fig = pearson_barplot.get_figure()
+
+pearson_barplot_fig.savefig(f'bar_plots/mean_pearson.png')
+plt.clf()
+
+
+# RMSE
+rmse_barplot = sns.barplot(x='tipo', y='RMSE', data=df, hue='percentual')
+
+rmse_barplot.set(ylim=(0, 5.5))
+rmse_barplot.set_ylabel('RMSE')
+rmse_barplot.set_xlabel('Technique')
+rmse_barplot.set_title('Techniques performance evaluation in comparison with RMSE')
+rmse_barplot.legend(loc='lower right')
+
+for container in rmse_barplot.containers:
+    rmse_barplot.bar_label(container, size=8, rotation='vertical', padding=2)
+
+rmse_barplot_fig = rmse_barplot.get_figure()
+
+rmse_barplot_fig.savefig(f'bar_plots/rmse.png')
+plt.clf()
